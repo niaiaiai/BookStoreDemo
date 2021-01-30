@@ -11,8 +11,11 @@ using MyRepositories.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using IdentityModel.Client;
 
 namespace Web.Controllers
 {
@@ -34,7 +37,8 @@ namespace Web.Controllers
         [HttpGet]
         public async Task Get()
         {
-            //return await _bookService.GetBooks(new BookSpecification(), 0, -10);
+            
+            
         }
     }
 }

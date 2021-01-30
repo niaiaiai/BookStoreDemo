@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -8,12 +8,10 @@
     <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+    <PackageReference Include="MyEntity" Version="1.0.0" />
+    <PackageReference Include="MyServices" Version="1.0.1-beta" />
+    <PackageReference Include="Utils" Version="1.1.0-beta" />
     <PackageReference Include="Volo.Abp.Specifications" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\MyEntity\MyEntity.csproj" />
-    <ProjectReference Include="..\..\MyServices\MyServices.csproj" />
   </ItemGroup>
 
 </Project>

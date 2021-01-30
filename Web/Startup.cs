@@ -1,12 +1,11 @@
 using Application;
 using AutoMapper;
 using Domain;
-using Domain.Interfaces;
-using Domain.Services;
+using IdentityModel;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +13,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MyRepositories;
 using MyRepositories.Repositories;
-using MyServices;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Web
 {
@@ -46,7 +42,7 @@ namespace Web
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
                     policy.WithOrigins("http://localhost:8080", "http://localhost:8081")
-                            .WithHeaders("x-requested-with", "content-type")
+                            .WithHeaders("x-requested-with", "content-type", "authorization")
                             .AllowAnyMethod()
                             .AllowCredentials();
                 });
@@ -54,15 +50,26 @@ namespace Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContextPool<BookStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreConnection")));
 
+            var authorizationSettings = Configuration.GetSection("Authorization");
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.Authority = authorizationSettings.GetValue<string>("Authority");
+                    options.RequireHttpsMetadata = false; //生产环境注释掉这个
+                    options.TokenValidationParameters.ValidIssuer = authorizationSettings.GetValue<string>("Authority");
+                    options.TokenValidationParameters.ValidAudience = authorizationSettings.GetValue<string>("Audience");
+                    options.TokenValidationParameters.RequireExpirationTime = true;
+                    options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
+                });
+
             services.AddScoped(typeof(IReadOnlyRepository<>), typeof(BookStoreRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(BookStoreRepository<>));
             services.AddScoped(typeof(IReadOnlyRepository<,>), typeof(BookStoreRepository<,>));
             services.AddScoped(typeof(IRepository<,>), typeof(BookStoreRepository<,>));
 
             services.AddUnitOfWork<BookStoreContext>();
-            //services.AddScoped<IInvoiceService, InvoiceService>();
-            //services.AddDefaultServices();
             services.AddDomainServices().AddApplicationServices();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -83,7 +90,7 @@ namespace Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

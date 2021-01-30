@@ -1,6 +1,7 @@
 ﻿using Application.Dtos.Books;
 using Application.Interfaces;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyServices.Dtos;
 using System;
@@ -12,6 +13,7 @@ namespace Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class BookController : ControllerBase
     {
         private readonly IBookViewService _bookViewService;
