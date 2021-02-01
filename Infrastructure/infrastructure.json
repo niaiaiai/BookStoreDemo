@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "BookStoreConnection": "Server=(LocalDb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=BookStore;"
+  }
+}

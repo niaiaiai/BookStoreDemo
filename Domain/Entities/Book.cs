@@ -23,7 +23,7 @@ namespace Domain.Entities
         public string Publisher { get; set; }
 
         [Required]
-        public string Auther { get; set; }
+        public string Author { get; set; }
 
         public int BookTypeId { get; set; }
 
@@ -40,7 +40,7 @@ namespace Domain.Entities
             ISBN = isbn;
             Image = image;
             Publisher = publisher;
-            Auther = auther;
+            Author = auther;
             Unit = unit;
             Remark = remark;
         }

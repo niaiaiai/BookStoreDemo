@@ -30,7 +30,7 @@ namespace Domain.Specifications
         {
             return book =>
                 (string.IsNullOrWhiteSpace(_title) || book.Title.Contains(_title)) &&
-                (string.IsNullOrWhiteSpace(_author) || book.Auther.Contains(_author)) &&
+                (string.IsNullOrWhiteSpace(_author) || book.Author.Contains(_author)) &&
                 (string.IsNullOrWhiteSpace(_publisher) || book.Publisher.Contains(_publisher)) &&
                 (string.IsNullOrWhiteSpace(_isbn) || book.ISBN == _isbn) &&
                 (_typeId == -1 || book.BookTypeId == _typeId);

@@ -44,7 +44,7 @@ namespace InfrastructureTest.Specifications
                 }
                 if (!string.IsNullOrWhiteSpace(author))
                 {
-                    Assert.Contains(author, book.Auther);
+                    Assert.Contains(author, book.Author);
                 }
                 if (!string.IsNullOrWhiteSpace(publisher))
                 {
@@ -80,11 +80,11 @@ namespace InfrastructureTest.Specifications
         [InlineData("垣野")]
         public async Task BookSpecification_IsSatisfied_WithType(string author)
         {
-            var satisfiedList = DataSeed.Books.Where(b => b.Auther.Contains(author));
+            var satisfiedList = DataSeed.Books.Where(b => b.Author.Contains(author));
 
             foreach (Book book in satisfiedList)
             {
-                Assert.Contains(author, book.Auther);
+                Assert.Contains(author, book.Author);
             }
         }
 
