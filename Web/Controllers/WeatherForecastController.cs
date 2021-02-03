@@ -1,21 +1,9 @@
-﻿using AutoMapper;
-using Domain.Entities;
-using Domain.Interfaces;
-using Domain.Specifications;
+﻿using Domain.Interfaces;
 using Infrastructure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MyRepositories.Repositories;
-using MyRepositories.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
-using System.Net.Http;
-using IdentityModel.Client;
 
 namespace Web.Controllers
 {

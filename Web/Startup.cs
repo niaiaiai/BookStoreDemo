@@ -1,12 +1,10 @@
 using Application;
 using AutoMapper;
 using Domain;
-using IdentityModel;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +12,6 @@ using Microsoft.OpenApi.Models;
 using MyRepositories;
 using MyRepositories.Repositories;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace Web
 {
@@ -48,7 +44,7 @@ namespace Web
                 });
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddDbContextPool<BookStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreConnection")));
+            services.AddInfrastructureServices(Configuration);
 
             var authorizationSettings = Configuration.GetSection("Authorization");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
