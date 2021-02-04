@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using MyEntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure
 {
-    public class BookStoreContext : DbContext
+    public class BookStoreContext : DbContextBase<BookStoreContext>
     {
         public BookStoreContext(DbContextOptions<BookStoreContext> options) : base(options) { }
 
@@ -22,6 +23,7 @@ namespace Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MyEntity;
+using MyEntity.Audit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using Utils.Extensions;
 
 namespace Domain.Entities
 {
-    public class Invoice : AggregateRoot<Guid>
+    public class Invoice : CreationAuditedAggregateRoot<Guid, string>
     {
         protected Invoice() { }
 

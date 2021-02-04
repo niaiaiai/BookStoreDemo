@@ -29,14 +29,14 @@ namespace Web.Controllers
             return Ok(result);
         }
 
-        [HttpPost("close")]
+        [HttpPost("close/{orderId}")]
         public async Task<ActionResult> OrderClose(Guid orderId)
         {
             await _orderService.OrderClose(orderId);
             return Ok();
         }
 
-        [HttpPost("deliver")]
+        [HttpPost("deliver/{orderId}")]
         public async Task<ActionResult> OrderDeliver(Guid orderId)
         {
             await _orderService.OrderDeliver(orderId);
