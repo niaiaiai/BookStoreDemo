@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using MyRepositories;
 using MyRepositories.Repositories;
 using System;
+using Web.Extensions;
 
 namespace Web
 {
@@ -66,6 +67,8 @@ namespace Web
             services.AddUnitOfWork<BookStoreContext>();
             services.AddDomainServices().AddApplicationServices();
 
+            services.AddScoped<IDataSeed, BookStoreDataSeed>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -84,7 +87,7 @@ namespace Web
             }
             app.UseCors("MyPolicy");
             app.UseHttpsRedirection();
-
+            app.UseDataInit();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -31,7 +31,7 @@ namespace Ids4.Controllers
         }
 
         [HttpGet]
-        public async Task Get()
+        public async Task Migration()
         {
             
         }
