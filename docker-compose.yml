@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  web:
+    image: ${DOCKER_REGISTRY-}bookstoredemo
+    build:
+      context: .
+      dockerfile: Web/Dockerfile
+    ports:
+      - "5032:80"
+    container_name: bookstoredemo

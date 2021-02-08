@@ -31,7 +31,7 @@ namespace Ids4
                 options.AddPolicy("MyPolicy", policy =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
-                    policy.WithOrigins("http://localhost:8080", "http://localhost:8081")
+                    policy.WithOrigins("http://localhost:8080", "https://studydemo.online:8081")
                             .WithHeaders("x-requested-with", "content-type")
                             .AllowAnyMethod()
                             .AllowCredentials();

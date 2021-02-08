@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
 using MyRepositories;
 using MyRepositories.Repositories;
@@ -32,13 +33,13 @@ namespace Web
             //containerBuilder.RegisterType<GetBookValidationInterceptor>();
             //containerBuilder.RegisterType<Class1>().As<Interface1>().InterceptedBy(typeof(GetBookValidationInterceptor)).EnableInterfaceInterceptors();
             //var container = containerBuilder.Build();
-
+            string[] origins = Configuration.GetValue<string>("Cors:Origins").Split(',');
             services.AddCors(options =>
             {
                 options.AddPolicy("MyPolicy", policy =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
-                    policy.WithOrigins("http://localhost:8080", "http://localhost:8081")
+                    policy.WithOrigins(origins)
                             .WithHeaders("x-requested-with", "content-type", "authorization")
                             .AllowAnyMethod()
                             .AllowCredentials();
@@ -52,7 +53,9 @@ namespace Web
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.Authority = authorizationSettings.GetValue<string>("Authority");
-                    options.RequireHttpsMetadata = false; //生产环境注释掉这个
+                    options.RequireHttpsMetadata = authorizationSettings.GetValue<bool>("RequireHttpsMetadata");
+                    options.MetadataAddress = $"{authorizationSettings.GetValue<string>("Authority")}/.well-known/openid-configuration";
+                    options.Configuration = new OpenIdConnectConfiguration();
                     options.TokenValidationParameters.ValidIssuer = authorizationSettings.GetValue<string>("Authority");
                     options.TokenValidationParameters.ValidAudience = authorizationSettings.GetValue<string>("Audience");
                     options.TokenValidationParameters.RequireExpirationTime = true;
@@ -84,8 +87,9 @@ namespace Web
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web v1"));
+                app.UseCors("MyPolicy");
             }
-            app.UseCors("MyPolicy");
+            
             app.UseHttpsRedirection();
             app.UseDataInit();
             app.UseRouting();

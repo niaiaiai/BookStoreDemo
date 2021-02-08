@@ -41,7 +41,7 @@ namespace Ids4.Middlewares.DataInitMiddlewares
                 SlidingRefreshTokenLifetime = 60 * 5,
                 AccessTokenLifetime = 60 * 5,
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                AllowedCorsOrigins = { "http://localhost:8080" },
+                AllowedCorsOrigins = { "http://localhost:8080", "https://studydemo.online:8081" },
                 AllowedScopes = {
                     "bookstore",
                     IdentityServerConstants.StandardScopes.OpenId,

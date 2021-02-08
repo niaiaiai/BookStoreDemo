@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using MyRepositories.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Infrastructure
 {
@@ -16,16 +17,31 @@ namespace Infrastructure
 
             context.Database.Migrate();
 
-            context.BookTypes.AddRange(new List<BookType>
+            if (!context.BookTypes.Any())
             {
-                new BookType{ TypeName = "计算机" },
-                new BookType{ TypeName = "漫画" },
-                new BookType{ TypeName = "人际关系" }
-            });
-            context.Books.AddRange(DataSeed.Books);
-            context.BookPrices.AddRange(DataSeed.BookPrices);
-            context.Orders.AddRange(DataSeed.Orders);
-            context.Invoices.AddRange(DataSeed.Invoices);
+                context.BookTypes.AddRange(new List<BookType>
+                {
+                    new BookType{ TypeName = "计算机" },
+                    new BookType{ TypeName = "漫画" },
+                    new BookType{ TypeName = "人际关系" }
+                });
+            }
+            if (!context.Books.Any())
+            {
+                context.Books.AddRange(DataSeed.Books);
+            }
+            if (!context.BookPrices.Any())
+            {
+                context.BookPrices.AddRange(DataSeed.BookPrices);
+            }
+            if (!context.Orders.Any())
+            {
+                context.Orders.AddRange(DataSeed.Orders);
+            }
+            if (!context.Invoices.Any())
+            {
+                context.Invoices.AddRange(DataSeed.Invoices);
+            }
             context.SaveChanges();
         }
     }
