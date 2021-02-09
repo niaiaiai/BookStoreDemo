@@ -1,3 +1,4 @@
+using IdentityServer4.Extensions;
 using Ids4.Data;
 using Ids4.Extensions;
 using Ids4.Services;
@@ -26,12 +27,13 @@ namespace Ids4
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            string[] origins = Configuration.GetValue<string>("Cors:Origins").Split(',');
             services.AddCors(options =>
             {
                 options.AddPolicy("MyPolicy", policy =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
-                    policy.WithOrigins("http://localhost:8080", "https://studydemo.online:8081")
+                    policy.WithOrigins(origins)
                             .WithHeaders("x-requested-with", "content-type")
                             .AllowAnyMethod()
                             .AllowCredentials();
@@ -80,8 +82,12 @@ namespace Ids4
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web v1"));
+                app.UseCors("MyPolicy");
             }
-            app.UseCors("MyPolicy");
+            app.Use((ctx, next) => { 
+                ctx.SetIdentityServerOrigin(ctx.RequestServices.GetService<IConfiguration>().GetValue<string>("IdentityServerOrigin")); 
+                return next(); 
+            });
             app.UseHttpsRedirection();
 
             app.UseDataInit();

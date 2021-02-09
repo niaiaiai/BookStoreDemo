@@ -55,7 +55,6 @@ namespace Web
                     options.Authority = authorizationSettings.GetValue<string>("Authority");
                     options.RequireHttpsMetadata = authorizationSettings.GetValue<bool>("RequireHttpsMetadata");
                     options.MetadataAddress = $"{authorizationSettings.GetValue<string>("Authority")}/.well-known/openid-configuration";
-                    options.Configuration = new OpenIdConnectConfiguration();
                     options.TokenValidationParameters.ValidIssuer = authorizationSettings.GetValue<string>("Authority");
                     options.TokenValidationParameters.ValidAudience = authorizationSettings.GetValue<string>("Audience");
                     options.TokenValidationParameters.RequireExpirationTime = true;
