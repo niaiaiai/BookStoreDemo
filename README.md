@@ -1,4 +1,4 @@
-# BookStoreDemo
+# BookStoreDemo v1.0.0
 书店系统 demo 是针对书店后台服务人员操作的 MyFramework 框架的 demo，使用了 MyFramework 框架，ddd 架构，前后端分离。
 * demo: https://studydemo.online:8081/
 
