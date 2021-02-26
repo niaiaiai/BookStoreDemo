@@ -1,19 +1,13 @@
-using Application;
-using AutoMapper;
-using Domain;
-using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
-using MyRepositories;
-using MyRepositories.Repositories;
+using MyAspNetCore.Extensions;
+using MyCore.DependencyInjection;
 using System;
-using Web.Extensions;
 
 namespace Web
 {
@@ -29,6 +23,8 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            DependencyInjectionBase dependencyInjectionBase = new(services);
+
             //ContainerBuilder containerBuilder = new();
             //containerBuilder.RegisterType<GetBookValidationInterceptor>();
             //containerBuilder.RegisterType<Class1>().As<Interface1>().InterceptedBy(typeof(GetBookValidationInterceptor)).EnableInterfaceInterceptors();
@@ -45,8 +41,6 @@ namespace Web
                             .AllowCredentials();
                 });
             });
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddInfrastructureServices(Configuration);
 
             var authorizationSettings = Configuration.GetSection("Authorization");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -60,16 +54,6 @@ namespace Web
                     options.TokenValidationParameters.RequireExpirationTime = true;
                     options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
                 });
-
-            services.AddScoped(typeof(IReadOnlyRepository<>), typeof(BookStoreRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(BookStoreRepository<>));
-            services.AddScoped(typeof(IReadOnlyRepository<,>), typeof(BookStoreRepository<,>));
-            services.AddScoped(typeof(IRepository<,>), typeof(BookStoreRepository<,>));
-
-            services.AddUnitOfWork<BookStoreContext>();
-            services.AddDomainServices().AddApplicationServices();
-
-            services.AddScoped<IDataSeed, BookStoreDataSeed>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

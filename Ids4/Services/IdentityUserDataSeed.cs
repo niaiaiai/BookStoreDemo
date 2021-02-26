@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MyRepositories.Repositories;
 using System;
 using System.Linq;
-using System.Security.Claims;
 
 namespace Ids4.Services
 {

@@ -1,17 +1,14 @@
 ﻿using Domain.Interfaces;
 using Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MyCore.DependencyInjection;
+using MyRepositories.Repositories;
 
 namespace Domain
 {
-    public static class DependencyRegistrar
+    public class DependencyInjection : DefaultConfigureServices
     {
-        public static IServiceCollection AddDomainServices(this IServiceCollection services)
+        public override IServiceCollection ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IInvoiceService, InvoiceService>();

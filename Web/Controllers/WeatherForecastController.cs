@@ -1,7 +1,12 @@
-﻿using Domain.Interfaces;
+﻿using Application.Interfaces;
+using AutoMapper;
+using Domain.Entities;
+using Domain.Interfaces;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using MyRepositories.Repositories;
+using MyRepositories.UnitOfWork;
 using System;
 using System.Threading.Tasks;
 
@@ -11,15 +16,10 @@ namespace Web.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        public WeatherForecastController(IServiceProvider serviceProvider)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-
-        public WeatherForecastController(IServiceProvider serviceProvider, BookStoreContext context)
-        {
-            var _mapper = serviceProvider.GetService<IInvoiceService>();
+            var _mapper = serviceProvider.GetService<BookStoreContext>();
+            var aa = serviceProvider.GetRequiredService<IDataSeed>();
         }
 
         [HttpGet]

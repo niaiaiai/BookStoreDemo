@@ -1,18 +1,18 @@
 ﻿using Application.Interfaces;
 using Application.Services;
+using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using MyCore.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application
 {
-    public static class DependencyRegistrar
+    public class DependencyInjection : DefaultConfigureServices
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public override IServiceCollection ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IBookViewService, BookViewService>();
             services.AddScoped<IInvoiceViewService, InvoiceViewService>();
             services.AddScoped<IPriceViewService, PriceViewService>();

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MyFramework\src\MyWeb\MyWeb.csproj" />
+    <ProjectReference Include="..\..\MyFramework\src\MyAspNetCore\MyAspNetCore.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>

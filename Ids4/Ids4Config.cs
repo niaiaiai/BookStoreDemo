@@ -2,10 +2,9 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Ids4.Middlewares.DataInitMiddlewares
+namespace Ids4
 {
     public static class Ids4Config
     {
