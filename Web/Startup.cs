@@ -1,13 +1,17 @@
+using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MyAspNetCore.Extensions;
 using MyCore.DependencyInjection;
 using System;
+using Web.HealthChecks;
 
 namespace Web
 {
@@ -55,6 +59,9 @@ namespace Web
                     options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
                 });
 
+            //services.AddSingleton<IHealthCheckPublisher, BookStoreContextHealthCheckPublisher>();
+            services.AddHealthChecks().AddDbContextCheck<BookStoreContext>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -78,6 +85,11 @@ namespace Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseHealthChecks("/health", new HealthCheckOptions
+            {
+                AllowCachingResponses = false
+            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,7 +1,9 @@
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Diagnostics;
+using System.IO;
 using Xunit;
 
 namespace InfrastructureTest
@@ -17,17 +19,19 @@ namespace InfrastructureTest
 
         private static DbContext DbConfig()
         {
-            string connectionString = @"Server=(LocalDb)\MSSQLLocalDB;Database=BookStore;Trusted_Connection=True;MultipleActiveResultSets=true";
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.Development.json", true, true)
+                .Build();
 
             var options = new DbContextOptionsBuilder<BookStoreContext>()
-                .UseSqlServer(connectionString)
+                .UseSqlServer(configuration.GetConnectionString("BookStoreConnection"))
                 .Options;
 
             DbContext context = new BookStoreContext(options);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            DataSeed.InitBookStoreData((BookStoreContext)context).Wait();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            //DataSeed.InitBookStoreData((BookStoreContext)context).Wait();
             return context;
         }
     }

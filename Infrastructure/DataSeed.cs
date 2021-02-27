@@ -79,28 +79,5 @@ namespace Infrastructure
                 new InvoiceItem(Guid.Parse("e3bde9da-28cb-4777-b779-33ccc178422e"), Guid.Parse("4f3a9241-4147-4adc-85be-08d8a7273f08"), 1, -10.90000m)
             }) { Id = Guid.Parse("e3bde9da-28cb-4777-b779-33ccc178422e") }
         };
-
-        public static async Task InitBookStoreData(BookStoreContext context)
-        {
-            List<BookType> types = new List<BookType>
-            {
-                new BookType{ TypeName = "计算机" },
-                new BookType{ TypeName = "漫画" },
-                new BookType{ TypeName = "人际关系" }
-            };
-            try
-            {
-                await context.AddRangeAsync(types);
-                await context.AddRangeAsync(Books);
-                await context.AddRangeAsync(BookPrices);
-                await context.AddRangeAsync(Orders);
-                await context.AddRangeAsync(Invoices);
-                await context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
     }
 }

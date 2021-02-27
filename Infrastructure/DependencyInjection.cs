@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyCore.DependencyInjection;
@@ -32,6 +34,7 @@ namespace Infrastructure
             services.AddUnitOfWork<BookStoreContext>();
 
             services.AddScoped<IDataSeed, BookStoreDataSeed>();
+            services.AddTransient<IEmailSender, EmailSender>();
             return services;
         }
     }
