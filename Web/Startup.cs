@@ -61,6 +61,10 @@ namespace Web
 
             //services.AddSingleton<IHealthCheckPublisher, BookStoreContextHealthCheckPublisher>();
             services.AddHealthChecks().AddDbContextCheck<BookStoreContext>();
+            services.Configure<HealthCheckPublisherOptions>(options =>
+            {
+                options.Predicate = ch => ch.FailureStatus == HealthStatus.Unhealthy;
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

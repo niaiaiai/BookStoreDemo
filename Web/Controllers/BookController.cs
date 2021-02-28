@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     [Authorize]
-    public class BookController : ControllerBase
+    public class BookController : BaseController
     {
         private readonly IBookViewService _bookViewService;
         private readonly IBookService _bookService;

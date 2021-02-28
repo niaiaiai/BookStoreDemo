@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class OrderController : ControllerBase
+    public class OrderController : BaseController
     {
         private readonly IOrderViewService _orderViewService;
         private readonly IOrderService _orderService;

@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class PriceController : ControllerBase
+    public class PriceController : BaseController
     {
         private readonly IPriceViewService _priceViewService;
         private readonly IPriceService _priceService;

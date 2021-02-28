@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class InvoiceController : ControllerBase
+    public class InvoiceController : BaseController
     {
         private readonly IInvoiceService _invoiceService;
         private readonly IInvoiceViewService _invoiceViewService;
