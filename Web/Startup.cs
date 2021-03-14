@@ -7,11 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyAspNetCore.Extensions;
 using MyCore.DependencyInjection;
 using System;
-using Web.HealthChecks;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Web
 {
@@ -46,6 +48,12 @@ namespace Web
                 });
             });
 
+            string keyPublic = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "rsa_public_key.pem"));
+            //RSAParameters keyParameters = JsonSerializer.Deserialize<RSAParameters>(keyPublic);
+            //var rsaKey = new RsaSecurityKey(keyParameters);
+            RSA rsa = RSA.Create();
+            rsa.ImportFromPem(keyPublic.ToCharArray());
+
             var authorizationSettings = Configuration.GetSection("Authorization");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
@@ -57,6 +65,7 @@ namespace Web
                     options.TokenValidationParameters.ValidAudience = authorizationSettings.GetValue<string>("Audience");
                     options.TokenValidationParameters.RequireExpirationTime = true;
                     options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
+                    options.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(rsa);
                 });
 
             //services.AddSingleton<IHealthCheckPublisher, BookStoreContextHealthCheckPublisher>();

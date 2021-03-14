@@ -7,9 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyAspNetCore.Extensions;
 using MyRepositories.Repositories;
+using System.IO;
+using System.Security.Cryptography;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace Ids4
 {
@@ -50,6 +54,10 @@ namespace Ids4
                 options.Password.RequireNonAlphanumeric = false;
             });
 
+            string keyPrivate = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "rsa_private_key.pem"));
+            RSA rsa = RSA.Create();
+            rsa.ImportFromPem(keyPrivate.ToCharArray());
+            //RSAParameters keyParameters = JsonSerializer.Deserialize<RSAParameters>(keyPrivate);
             services.AddIdentityServer()
                 .AddConfigurationStore<Ids4ConfigurationDbContext>(options =>
                 {
@@ -60,7 +68,7 @@ namespace Ids4
                     options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString("Ids4Connection"));
                 })
                 .AddAspNetIdentity<IdentityUser>()
-                .AddDeveloperSigningCredential();
+                .AddSigningCredential(new RsaSecurityKey(rsa), RsaSigningAlgorithm.RS256);
 
             services.AddScoped<IDataSeed, Ids4DataSeed<Ids4ConfigurationDbContext, Ids4PersistedGrantDbContext>>();
             services.AddScoped<IDataSeed, IdentityUserDataSeed<ApplicationContext>>();
