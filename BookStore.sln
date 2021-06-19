@@ -34,10 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyAspNetCore", "..\MyFramework\src\MyAspNetCore\MyAspNetCore.csproj", "{9FAD080B-B227-49C6-93AE-46D31F87DCEE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCore", "..\MyFramework\src\MyCore\MyCore.csproj", "{367FE963-F79D-43B4-834C-1F7232E3A3D3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,14 +84,6 @@ Global
 		{3C48A229-2E46-4F1D-B3D0-1941F4A5732F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C48A229-2E46-4F1D-B3D0-1941F4A5732F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C48A229-2E46-4F1D-B3D0-1941F4A5732F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FAD080B-B227-49C6-93AE-46D31F87DCEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FAD080B-B227-49C6-93AE-46D31F87DCEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FAD080B-B227-49C6-93AE-46D31F87DCEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FAD080B-B227-49C6-93AE-46D31F87DCEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{367FE963-F79D-43B4-834C-1F7232E3A3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{367FE963-F79D-43B4-834C-1F7232E3A3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{367FE963-F79D-43B4-834C-1F7232E3A3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{367FE963-F79D-43B4-834C-1F7232E3A3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

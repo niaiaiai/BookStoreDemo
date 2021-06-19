@@ -11,3 +11,10 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  db:
+    ports:
+      - "1533:1433"
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - /home/myframeworkdemo/sqldatavol:/var/opt/mssql:ro

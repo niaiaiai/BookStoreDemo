@@ -9,3 +9,6 @@ services:
     ports:
       - "5032:80"
     container_name: bookstoredemo
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    container_name: MyFrameworkDemoDB(bookstoredemo)
